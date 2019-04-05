@@ -87,9 +87,9 @@ impl<T: Clone + Send + Sync> Future for CompletableFuture<T> {
             return Ok(Async::NotReady)
         }
         let option = lock.lock()?;
-        match option.clone() {
-            Some(value) => Ok(Async::Ready(value)),
-            None => Ok(Async::NotReady),
+        if !Self::check_atomic(complete) {
+            return Ok(Async::NotReady)
         }
+        Ok(Async::Ready(option.clone().unwrap()))
     }
 }
