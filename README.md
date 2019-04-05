@@ -1,7 +1,7 @@
 
 An implementation of `futures::Future` that is sorta like a Java `CompletableFuture`
 
-```
+```rust
 let mut future = CompletableFuture::<Result<u32, String>>::new();
 
 let local = future.clone();
